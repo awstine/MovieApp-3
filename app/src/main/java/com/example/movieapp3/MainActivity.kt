@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 // import androidx.compose.foundation.layout.BoxScopeInstance.align
 // import androidx.compose.foundation.layout.BoxScopeInstance.align
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -30,6 +32,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,7 +41,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -73,7 +79,7 @@ class MainActivity : ComponentActivity() {
                                 modifier =
                                     Modifier
                                         .weight(1f)
-                                        .padding(top = 18.dp),
+                                        .padding(top = 10.dp),
                                 fontSize = 40.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 textAlign = TextAlign.Left,
@@ -81,15 +87,32 @@ class MainActivity : ComponentActivity() {
                             )
                             IconButton(
                                 onClick = { isSearchVisible = !isSearchVisible },
+                                modifier =
+                                    Modifier
+                                        .size(55.dp)
+                                        .background(Color.Transparent),
                             ) {
                                 Icon(Icons.Default.Search, contentDescription = null)
                             }
                             if (isSearchVisible) {
+                                var text by remember { mutableStateOf("") }
                                 TextField(
-                                    value = "",
-                                    onValueChange = {},
+                                    value = text,
+                                    onValueChange = { newText ->
+                                        text = newText
+                                    },
                                     placeholder = { Text(text = "Search") },
                                     modifier = Modifier.fillMaxWidth(),
+                                    colors =
+                                        TextFieldDefaults.colors(
+                                            cursorColor = Color.White,
+                                            // leadingIconColor = Color.White,
+                                            // backgroundColor = Color.Transparent,
+                                            focusedIndicatorColor = Color.Transparent,
+                                            unfocusedIndicatorColor = Color.Transparent,
+                                            disabledTextColor = Color.White,
+                                        ),
+                                    textStyle = TextStyle(color = Color.White),
                                 )
                             }
 //                            Icon(
