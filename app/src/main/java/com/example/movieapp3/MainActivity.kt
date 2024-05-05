@@ -26,9 +26,15 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -45,6 +51,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MovieApp3Theme {
                 // A surface container using the 'background' color from the theme
+                var isSearchVisible by remember { mutableStateOf(false) }
                 val movies =
                     listOf(
                         R.drawable.baby,
@@ -72,10 +79,19 @@ class MainActivity : ComponentActivity() {
                                 textAlign = TextAlign.Left,
                                 text = "Movie App",
                             )
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = null,
-                            )
+                            IconButton(
+                                onClick = { isSearchVisible = !isSearchVisible },
+                            ) {
+                                Icon(Icons.Default.Search, contentDescription = null)
+                            }
+                            if (isSearchVisible) {
+                                TextField(
+                                    value = "",
+                                    onValueChange = {},
+                                    placeholder = { Text(text = "Search") },
+                                    modifier = Modifier.fillMaxWidth(),
+                                )
+                            }
 //                            Icon(
 //                                painter = painterResource(id = R.drawable.glass),
 //                                contentDescription = null,
