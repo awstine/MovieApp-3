@@ -22,7 +22,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -122,6 +127,8 @@ class MainActivity : ComponentActivity() {
 //                            )
                         }
                     },
+                    // BOTTOM BAR
+                    bottomBar = { BottomBar() },
                 ) { innerPadding ->
 
                     LazyColumn(
@@ -231,32 +238,44 @@ class MainActivity : ComponentActivity() {
 
     @Suppress("ktlint:standard:function-naming")
     @Composable
-    fun MovieCard() {
-        val movies =
-            listOf(
-                R.drawable.baby,
-                R.drawable.bank,
-                R.drawable.thieves,
-                R.drawable.terminal,
-            )
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            items(movies) { movie ->
-                Card(
-                    modifier =
-                        Modifier
-                            .width(150.dp)
-                            .height(220.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                ) {
-                    Image(
-                        painter = painterResource(id = movie),
+    fun BottomBar() {
+        val selectedIndex = remember { mutableStateOf(0) }
+        BottomNavigation(elevation = 10.dp) {
+            BottomNavigationItem(
+                selected = (selectedIndex.value == 0),
+                label = { Text(text = "Home") },
+                onClick = { selectedIndex.value == 0 },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Home,
                         contentDescription = null,
-                        modifier = Modifier.fillMaxSize(),
                     )
-                }
-            }
+                },
+            )
+
+            BottomNavigationItem(
+                selected = (selectedIndex.value == 1),
+                label = { Text(text = "My List") },
+                onClick = { selectedIndex.value == 1 },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = null,
+                    )
+                },
+            )
+
+            BottomNavigationItem(
+                selected = (selectedIndex.value == 2),
+                label = { Text(text = "Account") },
+                onClick = { selectedIndex.value == 2 },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.AccountCircle,
+                        contentDescription = null,
+                    )
+                },
+            )
         }
     }
 }
